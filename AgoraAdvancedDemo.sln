@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgoraAdvancedDemo", "AgoraAdvancedDemo.csproj", "{F221AD9D-0AB2-2F72-D403-6BC261819347}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgoraAdvancedDemo.Editor", "AgoraAdvancedDemo.Editor.csproj", "{257AF541-662F-562A-81DD-1516CD1CDE4A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F221AD9D-0AB2-2F72-D403-6BC261819347}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F221AD9D-0AB2-2F72-D403-6BC261819347}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F221AD9D-0AB2-2F72-D403-6BC261819347}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F221AD9D-0AB2-2F72-D403-6BC261819347}.Release|Any CPU.Build.0 = Release|Any CPU
+		{257AF541-662F-562A-81DD-1516CD1CDE4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{257AF541-662F-562A-81DD-1516CD1CDE4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{257AF541-662F-562A-81DD-1516CD1CDE4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{257AF541-662F-562A-81DD-1516CD1CDE4A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
