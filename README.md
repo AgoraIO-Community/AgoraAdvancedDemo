@@ -37,21 +37,14 @@ The library from Step 3/4 is non-official.  You may build your own Mac library i
 #### [](https://github.com/AgoraIO-Community/Unity-RTM#test-in-editor)Test in Editor
 
 1.  Go to  **File**  >  **Builds**  >  **Platform**  and select either Windows or Mac depending on the device you are working on.
-2. [Mac or iOS] make sure you fill in Camera and Microphone usage description 
+2. [Mac] make sure you fill in Camera and Microphone usage description 
 3. Press the Unity Play button to run the example scene
 
-![Screen Shot 2020-07-07 at 2 28 35 PM](https://user-images.githubusercontent.com/1261195/86847285-eb949c80-c060-11ea-8c0f-74c52d251b5e.png)
-
-#### [](https://github.com/AgoraIO-Community/Unity-RTM#deploy-to-windows-mac-android)Deploy to Windows, Mac, Android
+#### [](https://github.com/AgoraIO-Community/Unity-RTM#deploy-to-windows-mac-android)Deploy to Windows, Mac, iOS, Android
 
 1.  Deploy to Mac, Android, and Windows by simply changing the Platform in the  **File**  >  **Build Settings**, then switch to your prefered platform
-2.  Hit  **Build and Run**
-
-#### [](https://github.com/AgoraIO-Community/Unity-RTM#deploy-to-ios)Deploy to iOS
-
-1.  Change Platform to iOS in the Platform in the  **File**  >  **Build Settings**  Window, hit  **Build And Run**
-2.  In Xcode under the  **General**  Tab, under  **Targets**  >  **Unity-iPhone**>  **Frameworks, Libaries, and Embedded Content**  change  **AgoraRtmIos.framework**  to  **Embed & Sign**
-3.  Press the Play button in Xcode to build to your device
+2.  [Mac or iOS] make sure you fill in Camera and Microphone usage description 
+3.  Hit  **Build and Run**
 
 ## [](https://github.com/AgoraIO-Community/Unity-RTM#resources)Resources
 
@@ -60,6 +53,8 @@ The library from Step 3/4 is non-official.  You may build your own Mac library i
 -   Take a look at  [Agora Use Case](https://github.com/AgoraIO-usecase)  for more complicated real use case
 -   Repositories managed by developer communities can be found at  [Agora Community](https://github.com/AgoraIO-Community)
 
+## Main scene view
+![Screen Shot 2020-07-07 at 2 28 35 PM](https://user-images.githubusercontent.com/1261195/86847285-eb949c80-c060-11ea-8c0f-74c52d251b5e.png)
 
 ## License
 
