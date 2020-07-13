@@ -20,16 +20,21 @@ public class TestDesktopScreenShare : PlayerViewControllerBase
     {
         base.SetupUI();
 
-        Dropdown dropdown = GameObject.Find("Dropdown").GetComponent<Dropdown>();
+        Dropdown dropdown = GameObject.Find("Dropdown")?.GetComponent<Dropdown>();
         if (dropdown != null)
         {
-
+#if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
             WindowList list = AgoraNativeBridge.GetMacWindowList();
             if (list != null)
             {
                 dropdown.options = list.windows.Select(w =>
                     new Dropdown.OptionData(w.kCGWindowOwnerName + "|" + w.kCGWindowNumber)).ToList();
             }
+            GameObject.Find("InputField")?.SetActive(false);
+#else
+            dropdown.gameObject.SetActive(false);
+            inputField = GameObject.Find("InputField")?.GetComponent<InputField>();
+#endif
             WindowOptionDropdown = dropdown;
         }
 
@@ -63,7 +68,6 @@ public class TestDesktopScreenShare : PlayerViewControllerBase
         }
     }
 
-    #region MacOS ShareScreen --
     int displayID0or1 = 0;
     void ShareDisplayScreen()
     {
@@ -77,15 +81,36 @@ public class TestDesktopScreenShare : PlayerViewControllerBase
 
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
         mRtcEngine.StartScreenCaptureByDisplayId(getDisplayId(displayID0or1), default(Rectangle), sparams);  // 
+#else
+        TestRectCrop();
 #endif
         displayID0or1 = 1 - displayID0or1;
     }
 
+    void TestRectCrop()
+    {
+        Debug.LogWarning("TestRectCrop");
+        // Screen1 with region to crop
+        Rectangle screenRect = new Rectangle() { x = 0, y = 0, width = 1920, height = 1080 * 2 };
+        Rectangle regionRect = new Rectangle() { x = 0, y = 1080, width = 1920, height = 1080 };
+
+        int rc = mRtcEngine.StartScreenCaptureByScreenRect(default,
+            default,
+            //regionRect, // 400x400
+            //  new ScreenCaptureParameters() { dimensions = new VideoDimensions { width = 400, height = 400 } }
+            default
+            );
+        if (rc != 0) Debug.LogWarning("rc = " + rc);
+    }
+
     uint getDisplayId(int k)
     {
+#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
         List<uint> ids = AgoraNativeBridge.GetMacDisplayIds();
+#else
+        List<uint> ids = new List<uint>();
+#endif
 
-        Debug.LogWarning("Size = " + ids.Count);
         if (k < ids.Count)
         {
             return ids[k];
@@ -93,13 +118,14 @@ public class TestDesktopScreenShare : PlayerViewControllerBase
         return 0;
     }
 
-    #endregion
-
-    #region Windows Screen Screen ---
+    private InputField inputField;
 
     void OnShareWindowClick()
     {
+#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
+
         char[] delimiterChars = { '|' };
+        if (WindowOptionDropdown == null) return;
         string option = WindowOptionDropdown.options[WindowOptionDropdown.value].text;
         if (string.IsNullOrEmpty(option))
         {
@@ -111,6 +137,17 @@ public class TestDesktopScreenShare : PlayerViewControllerBase
         mRtcEngine.StopScreenCapture();
 
         mRtcEngine.StartScreenCaptureByWindowId(int.Parse(wid), default(Rectangle), default(ScreenCaptureParameters));
+
+#else
+
+        int winHandle;
+        if (int.TryParse(inputField.text, out winHandle))
+        {
+            mRtcEngine.StopScreenCapture();
+            mRtcEngine.StartScreenCaptureByWindowId(winHandle, default, default);
+        }
+
+#endif
+
     }
-    #endregion
 }
