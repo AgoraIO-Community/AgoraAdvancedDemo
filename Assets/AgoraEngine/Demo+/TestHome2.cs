@@ -51,6 +51,7 @@ public class TestHome2 : MonoBehaviour
         // keep this alive across scenes
         DontDestroyOnLoad(this.gameObject);
         channelInputField = GameObject.Find("ChannelName").GetComponent<InputField>();
+        previewImage.gameObject.AddComponent<VideoSurface>();
     }
 
     void Start()
@@ -150,6 +151,7 @@ public class TestHome2 : MonoBehaviour
         if (!_initialized) return;
         var engine = IRtcEngine.GetEngine(AppID);
         _previewing = !_previewing;
+        previewImage.GetComponent<VideoSurface>().SetEnable(_previewing);
         if (_previewing)
         {
             engine.EnableVideo();
@@ -162,7 +164,6 @@ public class TestHome2 : MonoBehaviour
             engine.DisableVideo();
             engine.DisableVideoObserver();
             engine.StopPreview();
-            previewImage.GetComponent<VideoSurface>().SetEnable(false);
             button.GetComponentInChildren<Text>().text = "StartPreview";
         }
     }
