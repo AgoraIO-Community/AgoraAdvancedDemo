@@ -138,7 +138,8 @@ public class TestAppScreenShare : PlayerViewControllerBase
                 //Set the buffer type of the video frame
                 externalVideoFrame.type = ExternalVideoFrame.VIDEO_BUFFER_TYPE.VIDEO_BUFFER_RAW_DATA;
                 // Set the video pixel format
-                externalVideoFrame.format = ExternalVideoFrame.VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_BGRA;
+                //externalVideoFrame.format = ExternalVideoFrame.VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_BGRA;  // V.2.9.x
+                externalVideoFrame.format = ExternalVideoFrame.VIDEO_PIXEL_FORMAT.VIDEO_PIXEL_RGBA;  // V.3.x.x
                 //apply raw data you are pulling from the rectangle you created earlier to the video frame
                 externalVideoFrame.buffer = bytes;
                 //Set the width of the video frame (in pixels)
