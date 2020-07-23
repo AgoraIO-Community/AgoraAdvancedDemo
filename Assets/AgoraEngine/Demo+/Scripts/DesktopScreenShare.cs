@@ -11,7 +11,7 @@ using AgoraNative;
 // How to enable video
 // How to join/leave channel
 // 
-public class TestDesktopScreenShare : PlayerViewControllerBase
+public class DesktopScreenShare : PlayerViewControllerBase
 {
 
     Dropdown WindowOptionDropdown;

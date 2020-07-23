@@ -129,7 +129,7 @@ public class TestHome2 : MonoBehaviour
                 app = new TestAppScreenShare();
                 break;
             case TestSceneEnum.DesktopScreenShare:
-                app = new TestDesktopScreenShare(); // create app
+                app = new DesktopScreenShare(); // create app
                 break;
         }
 
@@ -220,6 +220,7 @@ public class TestHome2 : MonoBehaviour
 
     void OnApplicationQuit()
     {
+        Debug.Log("OnApplicationQuit, clean up...");
         if (_previewing)
         {
             var engine = IRtcEngine.QueryEngine();
@@ -233,6 +234,7 @@ public class TestHome2 : MonoBehaviour
         {
             app.UnloadEngine();
         }
+        IRtcEngine.Destroy();
     }
 
 }

@@ -189,7 +189,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 171397135}
+      - m_Target: {fileID: 0}
         m_MethodName: HandlePreviewClick
         m_Mode: 2
         m_Arguments:
@@ -302,7 +302,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Advance Demo
+  m_Text: Advanced Demo
 --- !u!222 &29080755
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -407,7 +407,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 171397134}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d29a4faa29e114882be42f949b5f8a17, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b1b97729e7ca4968852ac7a736e1296, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   AppID: 
