@@ -102,18 +102,27 @@ public class TestAppScreenShare : PlayerViewControllerBase
     void DisableShareScreen()
     {
         StopSharing();
+        Debug.Log("ScreenShare Deactivated");
+        monoProxy.StartCoroutine(coResetChannel());
+    }
+
+    IEnumerator coResetChannel()
+    {
         mRtcEngine.DisableVideo();
         mRtcEngine.DisableVideoObserver();
-        Debug.Log("ScreenShare Deactivated");
         mRtcEngine.LeaveChannel();
+        yield return new WaitForSeconds(0.5f);
 
-        int i = mRtcEngine.SetExternalVideoSource(false, false);
-        Debug.LogWarning("SetExternalVideoSource i = " + i);
 
         mRtcEngine.EnableVideo();
         mRtcEngine.EnableLocalVideo(true);
         // Enables the video observer.
         mRtcEngine.EnableVideoObserver();
+
+        yield return new WaitForSeconds(0.5f);
+
+        int i = mRtcEngine.SetExternalVideoSource(false, false);
+        Debug.LogWarning("SetExternalVideoSource i = " + i);
         mRtcEngine.JoinChannel(_channel, null, 0);
     }
 

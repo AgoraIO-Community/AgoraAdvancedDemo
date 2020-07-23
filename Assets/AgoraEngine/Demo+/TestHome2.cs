@@ -57,8 +57,8 @@ public class TestHome2 : MonoBehaviour
     void Start()
     {
         CheckAppId();
-
         LoadLastChannel();
+        ShowVersion();
     }
 
     void Update()
@@ -145,6 +145,18 @@ public class TestHome2 : MonoBehaviour
         SceneManager.LoadScene(sceneFileName, LoadSceneMode.Single);
     }
 
+    void ShowVersion()
+    {
+        GameObject go = GameObject.Find("VersionText");
+        if (go != null)
+        {
+            Text text = go.GetComponent<Text>();
+            var engine = IRtcEngine.GetEngine(AppID);
+            Debug.Assert(engine != null, "Failed to get engine, appid = " + AppID);
+            text.text = IRtcEngine.GetSdkVersion();
+        }
+    }
+
     bool _previewing = false;
     public void HandlePreviewClick(Button button)
     {
@@ -180,6 +192,17 @@ public class TestHome2 : MonoBehaviour
 
     public void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
+        // Stop preview
+        if (_previewing)
+        {
+            var engine = IRtcEngine.QueryEngine();
+            if (engine != null)
+            {
+                engine.StopPreview();
+                _previewing = false;
+            }
+        }
+
         if (!ReferenceEquals(app, null))
         {
             app.OnSceneLoaded(); // call this after scene is loaded
@@ -197,6 +220,15 @@ public class TestHome2 : MonoBehaviour
 
     void OnApplicationQuit()
     {
+        if (_previewing)
+        {
+            var engine = IRtcEngine.QueryEngine();
+            if (engine != null)
+            {
+                engine.StopPreview();
+                _previewing = false;
+            }
+        }
         if (!ReferenceEquals(app, null))
         {
             app.UnloadEngine();

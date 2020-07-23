@@ -20,7 +20,7 @@ public class TestDesktopScreenShare : PlayerViewControllerBase
     {
         base.SetupUI();
 
-        Dropdown dropdown = GameObject.Find("Dropdown")?.GetComponent<Dropdown>();
+        Dropdown dropdown = GameObject.Find("Dropdown").GetComponent<Dropdown>();
         if (dropdown != null)
         {
 #if UNITY_STANDALONE_OSX || UNITY_EDITOR_OSX
@@ -30,7 +30,7 @@ public class TestDesktopScreenShare : PlayerViewControllerBase
                 dropdown.options = list.windows.Select(w =>
                     new Dropdown.OptionData(w.kCGWindowOwnerName + "|" + w.kCGWindowNumber)).ToList();
             }
-            GameObject.Find("InputField")?.SetActive(false);
+            GameObject.Find("InputField").SetActive(false);
 #else
             dropdown.gameObject.SetActive(false);
             inputField = GameObject.Find("InputField")?.GetComponent<InputField>();
@@ -94,11 +94,11 @@ public class TestDesktopScreenShare : PlayerViewControllerBase
         Rectangle screenRect = new Rectangle() { x = 0, y = 0, width = 1920, height = 1080 * 2 };
         Rectangle regionRect = new Rectangle() { x = 0, y = 1080, width = 1920, height = 1080 };
 
-        int rc = mRtcEngine.StartScreenCaptureByScreenRect(default,
-            default,
+        int rc = mRtcEngine.StartScreenCaptureByScreenRect(default(Rectangle),
+            default(Rectangle),
             //regionRect, // 400x400
             //  new ScreenCaptureParameters() { dimensions = new VideoDimensions { width = 400, height = 400 } }
-            default
+            default(ScreenCaptureParameters)
             );
         if (rc != 0) Debug.LogWarning("rc = " + rc);
     }
