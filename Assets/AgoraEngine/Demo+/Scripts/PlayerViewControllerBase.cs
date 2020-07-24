@@ -11,6 +11,7 @@ public class PlayerViewControllerBase : IVideoChatClient
 
     protected const string SelfVideoName = "myImage";
     protected const string MainVideoName = "mainImage";
+    protected string mChannel;
 
     /// <summary>
     ///   Where to display the video stream for remote user.  See
@@ -35,27 +36,38 @@ public class PlayerViewControllerBase : IVideoChatClient
     ///   Join a RTC channel
     /// </summary>
     /// <param name="channel"></param>
-    public virtual void Join(string channel)
+    public void Join(string channel)
     {
         Debug.Log("calling join (channel = " + channel + ")");
 
         if (mRtcEngine == null)
             return;
 
+        mChannel = channel;
+
         // set callbacks (optional)
         mRtcEngine.OnJoinChannelSuccess = OnJoinChannelSuccess;
         mRtcEngine.OnUserJoined = OnUserJoined;
         mRtcEngine.OnUserOffline = OnUserOffline;
 
-        // enable video
-        mRtcEngine.EnableVideo();
-        // allow camera output callback
-        mRtcEngine.EnableVideoObserver();
+        // Calling virtual setup function
+        PrepareToJoin();
 
         // join channel
         mRtcEngine.JoinChannel(channel, null, 0);
 
         Debug.Log("initializeEngine done");
+    }
+
+    /// <summary>
+    ///    Preparing video/audio/channel related characteric set up
+    /// </summary>
+    protected virtual void PrepareToJoin()
+    {
+        // enable video
+        mRtcEngine.EnableVideo();
+        // allow camera output callback
+        mRtcEngine.EnableVideoObserver();
     }
 
     /// <summary>

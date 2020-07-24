@@ -20,30 +20,11 @@ public class TestAppScreenShare : PlayerViewControllerBase
     bool running = false;
     int timestamp = 0;
     MonoBehaviour monoProxy;
-    string _channel;
 
-    public override void Join(string channel)
+    protected override void PrepareToJoin()
     {
-        Debug.Log("calling join (channel = " + channel + ")");
-
-        if (mRtcEngine == null)
-            return;
-
-
-        // set callbacks (optional)
-        mRtcEngine.OnJoinChannelSuccess = OnJoinChannelSuccess;
-        mRtcEngine.OnUserJoined = OnUserJoined;
-        mRtcEngine.OnUserOffline = OnUserOffline;
-        // enable video
-        mRtcEngine.EnableVideo();
-        // allow camera output callback
-        mRtcEngine.EnableVideoObserver();
+        base.PrepareToJoin();
         EnableShareScreen();
-        // join channel
-        mRtcEngine.JoinChannel(channel, null, 0);
-        _channel = channel;
-
-        Debug.Log("initializeEngine done");
     }
 
     protected override void SetupUI()
@@ -123,7 +104,7 @@ public class TestAppScreenShare : PlayerViewControllerBase
 
         int i = mRtcEngine.SetExternalVideoSource(false, false);
         Debug.LogWarning("SetExternalVideoSource i = " + i);
-        mRtcEngine.JoinChannel(_channel, null, 0);
+        mRtcEngine.JoinChannel(mChannel, null, 0);
     }
 
     IEnumerator shareScreen()

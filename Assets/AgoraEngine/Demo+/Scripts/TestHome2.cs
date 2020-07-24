@@ -32,8 +32,11 @@ public class TestHome2 : MonoBehaviour
 
     // PLEASE KEEP THIS App ID IN SAFE PLACE
     // Get your own App ID at https://dashboard.agora.io/
+    [Header("Agora Properties")]
     [SerializeField]
     private string AppID = "your_appid";
+
+    [Header("UI Controls")]
     [SerializeField]
     private InputField channelInputField;
     [SerializeField]
@@ -130,6 +133,9 @@ public class TestHome2 : MonoBehaviour
                 break;
             case TestSceneEnum.DesktopScreenShare:
                 app = new DesktopScreenShare(); // create app
+                break;
+            case TestSceneEnum.Transcoding:
+                app = new TranscodingApp();
                 break;
         }
 

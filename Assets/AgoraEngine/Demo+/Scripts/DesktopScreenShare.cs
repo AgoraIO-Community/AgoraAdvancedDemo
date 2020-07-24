@@ -91,8 +91,8 @@ public class DesktopScreenShare : PlayerViewControllerBase
     {
         Debug.LogWarning("TestRectCrop");
         // Screen1 with region to crop
-        Rectangle screenRect = new Rectangle() { x = 0, y = 0, width = 1920, height = 1080 * 2 };
-        Rectangle regionRect = new Rectangle() { x = 0, y = 1080, width = 1920, height = 1080 };
+        // Rectangle screenRect = new Rectangle() { x = 0, y = 0, width = 1920, height = 1080 * 2 };
+        // Rectangle regionRect = new Rectangle() { x = 0, y = 1080, width = 1920, height = 1080 };
 
         int rc = mRtcEngine.StartScreenCaptureByScreenRect(default(Rectangle),
             default(Rectangle),
