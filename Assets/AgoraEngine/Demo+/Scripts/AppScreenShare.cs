@@ -25,6 +25,8 @@ public class TestAppScreenShare : PlayerViewControllerBase
     {
         base.PrepareToJoin();
         EnableShareScreen();
+        mRtcEngine.SetChannelProfile(CHANNEL_PROFILE.CHANNEL_PROFILE_LIVE_BROADCASTING);
+        mRtcEngine.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
     }
 
     protected override void SetupUI()

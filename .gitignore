@@ -26,6 +26,8 @@
 /UnityPackageManager/
 
 
+*.log
+*.log.*
 *.app
 
 # Uncomment this line if you wish to ignore the asset store tools plugin

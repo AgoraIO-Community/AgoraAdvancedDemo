@@ -56,10 +56,10 @@ public class DesktopScreenShare : PlayerViewControllerBase
             button.onClick.AddListener(() => { mRtcEngine.StopScreenCapture(); });
         }
 
-        GameObject quad = GameObject.Find("Quad");
+        GameObject quad = GameObject.Find("DisplayPlane");
         if (ReferenceEquals(quad, null))
         {
-            Debug.Log("Error: failed to find Quad");
+            Debug.Log("Error: failed to find DisplayPlane");
             return;
         }
         else
