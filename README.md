@@ -18,7 +18,7 @@ With this sample app, you can:
 
 - Real devices (Windows, Android, iOS, and Mac supported)
 
-  
+  (Note some feature may require SDK version 3.0.1 and higher.)
 
   
 
@@ -110,7 +110,7 @@ The library from Step 3/4 is non-official.  You may build your own Mac library i
 
 ## Main scene view
 
-![Screen Shot 2020-07-07 at 2 28 35 PM](https://user-images.githubusercontent.com/1261195/86847285-eb949c80-c060-11ea-8c0f-74c52d251b5e.png)
+![Screen Shot 2020-07-07 at 2 28 35 PM](https://user-images.githubusercontent.com/1261195/88594543-3416f880-d016-11ea-9f75-5c7e712efa84.png)
 
   
 
@@ -119,13 +119,13 @@ The library from Step 3/4 is non-official.  You may build your own Mac library i
   
 
  **1. App Screen Share**
-     This demo shows how to share the screen (or rather "current app window") by recording the current camera view and push as an external video frame.  Applicable to mobile and desktop platforms.
+     This demo shows how to share the screen (or rather "current app window") by recording the current camera view and push as an external video frame.  Applicable to mobile and desktop platforms.<br>
  **2. Desktop Screen Share**
-     This demo shows how to share the desktop/window of the current running OS.  Applicable to desktop platforms only (Windows/MacOS). Note SDK calls for Windows are still under improvement.  Sharing specific window is not working.
+     This demo shows how to share the desktop/window of the current running OS.  Applicable to desktop platforms only (Windows/MacOS). Note SDK calls for Windows are still under improvement.  Sharing specific window is not working.<br>
  **3. Transcoding**
-     TBA
+     The demo shows the configuration to publish live streaming video to known CDNs, including Youtube, Facebook and Twitch.<br>
  **4. Inject Stream**
-     TBA
+     This demo show the configuration to inject real time video source to the video chat/broadcast. <br>
   
 
 ## License
