@@ -2,6 +2,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using Logger = agora_utilities.Logger;
+
 public class TranscodingApp : PlayerViewControllerBase
 {
     const string DOCUMENTATION_URL = "https://docs.agora.io/en/Interactive%20Broadcast/cdn_streaming_unity?platform=Unity";
@@ -9,6 +11,7 @@ public class TranscodingApp : PlayerViewControllerBase
     const int HOSTVIEW_HEIGHT = 640;
 
 
+    //!!! ------------ fill in your stream key here !!!----------//
     string TWURL = "rtmp://live-sjc.twitch.tv/app/<YOUR STREAM KEY>";
     string FBURL = "rtmps://live-api-s.facebook.com:443/rtmp/<YOUR STREAM KEY>";
     string YTURL = "rtmp://a.rtmp.youtube.com/live2/<YOUR STREAM KEY>";
@@ -20,6 +23,7 @@ public class TranscodingApp : PlayerViewControllerBase
     uint MyUID { get; set; }
     uint RemoteUID { get; set; }
     bool IsStreamingLive { get; set; }
+    Logger logger = null;
 
     protected override void PrepareToJoin()
     {
@@ -38,7 +42,7 @@ public class TranscodingApp : PlayerViewControllerBase
         };
         mRtcEngine.OnFirstRemoteVideoFrame = delegate (uint uid, int width, int height, int elapsed)
         {
-            Debug.LogFormat("OnFirstLocalVideoFrame => width:{0} height:{1} elapsed:{2} uid:{3}", width, height, elapsed, uid);
+            Debug.LogFormat("OnFirstRemoteVideoFrame => width:{0} height:{1} elapsed:{2} uid:{3}", width, height, elapsed, uid);
         };
 
         mRtcEngine.OnStreamPublished = OnStreamPublished;
@@ -57,6 +61,17 @@ public class TranscodingApp : PlayerViewControllerBase
         host2 = GameObject.Find("Host2").AddComponent<VideoSurface>();
         host1.SetEnable(false);
         host2.SetEnable(false);
+
+        GameObject loggerObj = GameObject.Find("LoggerText");
+        if (loggerObj != null)
+        {
+            Text text = loggerObj.GetComponent<Text>();
+            if (text != null)
+            {
+                logger = new Logger(text);
+                logger.Clear();
+            }
+        }
     }
 
     void HandleStartButtonClick(Button button)
@@ -68,6 +83,10 @@ public class TranscodingApp : PlayerViewControllerBase
         }
         else
         {
+            if (logger != null)
+            {
+                logger.DebugAssert(IsCDNAddressReady(), "You may need to fill in your Stream Key in the TranscodingApp source file!");
+            }
             button.GetComponentInChildren<Text>().text = "Stop";
             StartTranscoding(RemoteUID);
         }
@@ -183,6 +202,17 @@ public class TranscodingApp : PlayerViewControllerBase
         Debug.Log("---------------OnStreamPublished called----------------");
         Debug.Log("OnStreamPublished url===" + url);
         Debug.Log("OnStreamPublished errorCode===" + errorCode + " = " + IRtcEngine.GetErrorDescription(errorCode));
+    }
+
+    const string STREAMKEY_PLACEHOLDER = "<YOUR STREAM KEY>";
+    bool IsCDNAddressReady()
+    {
+        if (YTURL.Contains(STREAMKEY_PLACEHOLDER) || FBURL.Contains(STREAMKEY_PLACEHOLDER) || TWURL.Contains(STREAMKEY_PLACEHOLDER))
+        {
+            return false;
+        }
+
+        return true;
     }
 }
 

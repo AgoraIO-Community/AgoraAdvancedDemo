@@ -126,6 +126,12 @@ public class TestHome2 : MonoBehaviour
             return;
         }
 
+        if (!_initialized)
+        {
+            Debug.LogError("AppID null or app is not initialized properly!");
+            return;
+        }
+
         switch (scenename)
         {
             case TestSceneEnum.AppScreenShare:
