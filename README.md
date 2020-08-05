@@ -1,8 +1,27 @@
 # Agora Unity Video SDK Demos
 
-This project contains sample code to demonstrated advanced feature by the Agora Video SDK.
+This project contains sample code to demonstrate advanced features provided by the Agora Video SDK.
 
   
+
+## Main scene view
+
+![Screen Shot 2020-07-07 at 2 28 35 PM](https://user-images.githubusercontent.com/1261195/88594543-3416f880-d016-11ea-9f75-5c7e712efa84.png)
+
+  
+## Feature Note
+
+  
+
+ **1. App Screen Share**
+     This demo shows how to share the screen (or rather "current app window") by recording the current camera view and push as an external video frame.  Applicable to mobile and desktop platforms.<br>
+ **2. Desktop Screen Share**
+     This demo shows how to share the desktop/window of the current running OS.  Applicable to desktop platforms only (Windows/MacOS). Note SDK calls for Windows are still under improvement.  Sharing specific window is not working.<br>
+ **3. Transcoding**
+     The demo shows the configuration to publish live streaming video to known CDNs, including Youtube, Facebook and Twitch.<br>
+ **4. Inject Stream**
+     This demo show the configuration to inject real time video source to the video chat/broadcast. <br>
+    
 
 With this sample app, you can:
 
@@ -100,33 +119,14 @@ The library from Step 3/4 is non-official.  You may build your own Mac library i
 
 - For potential issues, take a look at our  [FAQ](https://docs.agora.io/cn/faq)  first
 
-- Dive into  [Agora SDK Samples](https://github.com/AgoraIO)  to see more tutorials
+- Dive into  [Agora SDK Samples](https://github.com/AgoraIO)  to see more tutorials, including [API demos](https://github.com/AgoraIO/Agora-Unity-Quickstart/tree/master/API-Example-Unity)
 
 - Take a look at  [Agora Use Case](https://github.com/AgoraIO-usecase)  for more complicated real use case
 
 - Repositories managed by developer communities can be found at  [Agora Community](https://github.com/AgoraIO-Community)
 
-  
 
-## Main scene view
 
-![Screen Shot 2020-07-07 at 2 28 35 PM](https://user-images.githubusercontent.com/1261195/88594543-3416f880-d016-11ea-9f75-5c7e712efa84.png)
-
-  
-
-## Feature Note
-
-  
-
- **1. App Screen Share**
-     This demo shows how to share the screen (or rather "current app window") by recording the current camera view and push as an external video frame.  Applicable to mobile and desktop platforms.<br>
- **2. Desktop Screen Share**
-     This demo shows how to share the desktop/window of the current running OS.  Applicable to desktop platforms only (Windows/MacOS). Note SDK calls for Windows are still under improvement.  Sharing specific window is not working.<br>
- **3. Transcoding**
-     The demo shows the configuration to publish live streaming video to known CDNs, including Youtube, Facebook and Twitch.<br>
- **4. Inject Stream**
-     This demo show the configuration to inject real time video source to the video chat/broadcast. <br>
-  
 
 ## License
 
