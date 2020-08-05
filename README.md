@@ -117,7 +117,7 @@ The library from Step 3/4 is non-official.  You may build your own Mac library i
 
   
 
-- For potential issues, take a look at our  [FAQ](https://docs.agora.io/cn/faq)  first
+- For potential issues, take a look at our  [FAQ](https://docs.agora.io/en/faq)  first
 
 - Dive into  [Agora SDK Samples](https://github.com/AgoraIO)  to see more tutorials, including [API demos](https://github.com/AgoraIO/Agora-Unity-Quickstart/tree/master/API-Example-Unity)
 
