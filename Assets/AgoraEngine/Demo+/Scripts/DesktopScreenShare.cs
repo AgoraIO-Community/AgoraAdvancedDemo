@@ -33,7 +33,7 @@ public class DesktopScreenShare : PlayerViewControllerBase
             GameObject.Find("InputField").SetActive(false);
 #else
             dropdown.gameObject.SetActive(false);
-            inputField = GameObject.Find("InputField")?.GetComponent<InputField>();
+            inputField = GameObject.Find("InputField").GetComponent<InputField>();
 #endif
             WindowOptionDropdown = dropdown;
         }
@@ -138,13 +138,13 @@ public class DesktopScreenShare : PlayerViewControllerBase
 
         mRtcEngine.StartScreenCaptureByWindowId(int.Parse(wid), default(Rectangle), default(ScreenCaptureParameters));
 
-#else
+#elif UNITY_EDITOR_WIN ||  UNITY_STANDALONE_WIN
 
         int winHandle;
         if (int.TryParse(inputField.text, out winHandle))
         {
             mRtcEngine.StopScreenCapture();
-            mRtcEngine.StartScreenCaptureByWindowId(winHandle, default, default);
+            mRtcEngine.StartScreenCaptureByWindowId(winHandle, default(Rectangle), default(ScreenCaptureParameters));
         }
 
 #endif

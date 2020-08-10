@@ -67,6 +67,7 @@ public class TestHome2 : MonoBehaviour
     void Update()
     {
         CheckPermissions();
+        CheckExit();
     }
 
     private void CheckAppId()
@@ -182,6 +183,9 @@ public class TestHome2 : MonoBehaviour
             engine.EnableVideoObserver();
             engine.StartPreview();
             button.GetComponentInChildren<Text>().text = "StopPreview";
+
+            // VideoManager only works after video enabled
+            CheckDevices(engine);
         }
         else
         {
@@ -249,4 +253,31 @@ public class TestHome2 : MonoBehaviour
         IRtcEngine.Destroy();
     }
 
+    void CheckExit()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            // Gracefully quit on OS like Android, so OnApplicationQuit() is called
+            Application.Quit();
+#endif
+        }
+    }
+
+    /// <summary>
+    ///   This method shows the CheckVideoDeviceCount API call.  It should only be used
+    //  after EnableVideo() call.
+    /// </summary>
+    /// <param name="engine">Video Engine </param>
+    void CheckDevices(IRtcEngine engine)
+    {
+        VideoDeviceManager deviceManager = VideoDeviceManager.GetInstance(engine);
+        deviceManager.CreateAVideoDeviceManager();
+
+        int cnt = deviceManager.GetVideoDeviceCount();
+        Debug.Log("Device count =============== " + cnt);
+    }
 }
