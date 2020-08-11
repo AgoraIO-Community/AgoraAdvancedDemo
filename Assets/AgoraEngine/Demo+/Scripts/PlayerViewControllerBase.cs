@@ -31,6 +31,9 @@ public class PlayerViewControllerBase : IVideoChatClient
         }
     }
 
+    protected virtual float WidthHeightRatio { get { return .75f; } }
+    protected virtual float RemoteVideoScale { get { return 1f; } }
+
     protected bool remoteUserJoined = false;
 
     public PlayerViewControllerBase()
@@ -215,6 +218,7 @@ public class PlayerViewControllerBase : IVideoChatClient
             videoSurface.SetEnable(true);
             videoSurface.SetVideoSurfaceType(AgoraVideoSurfaceType.RawImage);
             videoSurface.SetGameFps(30);
+            videoSurface.EnableFilpTextureApply(enableFlipHorizontal: true, enableFlipVertical: false);
         }
     }
 
@@ -227,7 +231,7 @@ public class PlayerViewControllerBase : IVideoChatClient
     }
 
     private const float Offset = 100;
-    public VideoSurface makeImageSurface(string goName)
+    protected VideoSurface makeImageSurface(string goName)
     {
         GameObject go = new GameObject();
 
@@ -253,7 +257,7 @@ public class PlayerViewControllerBase : IVideoChatClient
         float xPos = UnityEngine.Random.Range(Offset - Screen.width / 2f, Screen.width / 2f - Offset);
         float yPos = UnityEngine.Random.Range(Offset, Screen.height / 2f - Offset);
         go.transform.localPosition = new Vector3(xPos, yPos, 0f);
-        go.transform.localScale = new Vector3(1.5f, 2f, 1f);
+        go.transform.localScale = new Vector3(WidthHeightRatio * RemoteVideoScale, RemoteVideoScale, RemoteVideoScale);
 
         // configure videoSurface
         VideoSurface videoSurface = go.AddComponent<VideoSurface>();

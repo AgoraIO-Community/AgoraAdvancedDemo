@@ -144,6 +144,9 @@ public class TestHome2 : MonoBehaviour
             case TestSceneEnum.Transcoding:
                 app = new TranscodingApp();
                 break;
+            case TestSceneEnum.InjectStream:
+                app = new InjectStreamApp();
+                break;
         }
 
         if (app == null) return;
