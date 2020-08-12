@@ -12,12 +12,12 @@ public class PlayerViewControllerBase : IVideoChatClient
     protected const string SelfVideoName = "myImage";
     protected const string MainVideoName = "mainImage";
     protected string mChannel;
-    string logFilepath =
-#if UNITY_EDITOR
-    Application.dataPath + "/testagora.log";
-#else
-    Application.persistentDataPath + "/tesagora.log";
-#endif
+    //    string logFilepath =
+    //#if UNITY_EDITOR
+    //    Application.dataPath + "/testagora.log";
+    //#else
+    //    Application.persistentDataPath + "/tesagora.log";
+    //#endif
 
     /// <summary>
     ///   Where to display the video stream for remote user.  See
@@ -148,7 +148,7 @@ public class PlayerViewControllerBase : IVideoChatClient
             Debug.LogWarningFormat("RTC Warning:{0}, msg:{1}", code, IRtcEngine.GetErrorDescription(code));
         };
 
-        mRtcEngine.SetLogFile(logFilepath);
+        // mRtcEngine.SetLogFile(logFilepath);
         // enable log
         mRtcEngine.SetLogFilter(LOG_FILTER.DEBUG | LOG_FILTER.INFO | LOG_FILTER.WARNING | LOG_FILTER.ERROR | LOG_FILTER.CRITICAL);
     }
