@@ -20,6 +20,7 @@ public class TestAppScreenShare : PlayerViewControllerBase
     bool running = false;
     int timestamp = 0;
     MonoBehaviour monoProxy;
+    GameObject particleEffect;
 
     protected override void PrepareToJoin()
     {
@@ -36,11 +37,12 @@ public class TestAppScreenShare : PlayerViewControllerBase
 
         Button button = GameObject.Find("StopButton").GetComponent<Button>();
         button.onClick.AddListener(() => { DisableShareScreen(); });
+
+        particleEffect = GameObject.Find("ParticleEffect");
     }
 
     protected override void OnUserJoined(uint uid, int elapsed)
     {
-        base.OnUserJoined(uid, elapsed);
         TotalUserJoined++;
         if (TotalUserJoined == 1 && running == false)
         {
@@ -73,11 +75,6 @@ public class TestAppScreenShare : PlayerViewControllerBase
 
     void EnableShareScreen()
     {
-        // enable video
-        // mRtcEngine.EnableVideo();
-        // allow camera output callback
-        //mRtcEngine.EnableVideoObserver();
-
         // Very Important to make this app work
         mRtcEngine.SetExternalVideoSource(true, false);
     }
@@ -86,28 +83,9 @@ public class TestAppScreenShare : PlayerViewControllerBase
     {
         StopSharing();
         Debug.Log("ScreenShare Deactivated");
-        monoProxy.StartCoroutine(coResetChannel());
+        particleEffect.SetActive(false);
     }
 
-    IEnumerator coResetChannel()
-    {
-        mRtcEngine.DisableVideo();
-        mRtcEngine.DisableVideoObserver();
-        mRtcEngine.LeaveChannel();
-        yield return new WaitForSeconds(0.5f);
-
-
-        mRtcEngine.EnableVideo();
-        mRtcEngine.EnableLocalVideo(true);
-        // Enables the video observer.
-        mRtcEngine.EnableVideoObserver();
-
-        yield return new WaitForSeconds(0.5f);
-
-        int i = mRtcEngine.SetExternalVideoSource(false, false);
-        Debug.LogWarning("SetExternalVideoSource i = " + i);
-        mRtcEngine.JoinChannel(mChannel, null, 0);
-    }
 
     IEnumerator shareScreen()
     {

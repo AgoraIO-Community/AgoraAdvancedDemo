@@ -396,7 +396,7 @@ GameObject:
   - component: {fileID: 523253410}
   - component: {fileID: 523253409}
   m_Layer: 0
-  m_Name: Particle System
+  m_Name: ParticleEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -516,7 +516,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 2147026779
+  randomSeed: -1581693136
   InitialModule:
     serializedVersion: 3
     enabled: 1
