@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 /// <summary>
 ///   This script shows how to do Screen Sharing the Unity Application screen.
+///   The Sender/Receiver are operating in LiveBroadcasting mode.
 ///   Two important APIs are center of this feature:
 ///     1. SetExternalVideoSource - sets up the stream to use user defined data
 ///     2. PushVideoFrame - sends the raw data to the receipants. 
@@ -14,7 +15,6 @@ using UnityEngine.UI;
 /// </summary>
 public class TestAppScreenShare : PlayerViewControllerBase
 {
-    int TotalUserJoined = 0;
     Texture2D mTexture;
     Rect mRect;
     bool running = false;
@@ -26,8 +26,27 @@ public class TestAppScreenShare : PlayerViewControllerBase
     {
         base.PrepareToJoin();
         EnableShareScreen();
+
+        // Live Broadcasting mode to allow many view only audience 
         mRtcEngine.SetChannelProfile(CHANNEL_PROFILE.CHANNEL_PROFILE_LIVE_BROADCASTING);
         mRtcEngine.SetClientRole(CLIENT_ROLE_TYPE.CLIENT_ROLE_BROADCASTER);
+
+        // This block of code push frame at full resolution, proving the support of 720p
+        mRtcEngine.SetVideoEncoderConfiguration(new VideoEncoderConfiguration()
+        {
+            bitrate = 1130,
+            frameRate = FRAME_RATE.FRAME_RATE_FPS_15,
+            dimensions = new VideoDimensions() { width = Screen.width, height = Screen.height }
+        });
+
+        Debug.LogFormat("Sharing Screen with width = {0} height = {1}", Screen.width, Screen.height);
+    }
+
+
+    protected override void OnJoinChannelSuccess(string channelName, uint uid, int elapsed)
+    {
+        base.OnJoinChannelSuccess(channelName, uid, elapsed);
+        StartSharing();
     }
 
     protected override void SetupUI()
@@ -41,12 +60,10 @@ public class TestAppScreenShare : PlayerViewControllerBase
         particleEffect = GameObject.Find("ParticleEffect");
     }
 
-    protected override void OnUserJoined(uint uid, int elapsed)
+    protected void StartSharing()
     {
-        TotalUserJoined++;
-        if (TotalUserJoined == 1 && running == false)
+        if (running == false)
         {
-            // CreateController();
             // Create a rectangle width and height of the screen
             mRect = new Rect(0, 0, Screen.width, Screen.height);
             // Create a texture the size of the rectangle you just created
@@ -54,22 +71,6 @@ public class TestAppScreenShare : PlayerViewControllerBase
             // get the rtc engine instance, assume it has been created before this script starts
             running = true;
             monoProxy.StartCoroutine(shareScreen());
-        }
-    }
-
-    protected override void OnUserOffline(uint uid, USER_OFFLINE_REASON reason)
-    {
-        base.OnUserOffline(uid, reason);
-
-        GameObject gameObject = GameObject.Find(uid.ToString());
-        if (gameObject != null)
-        {
-            GameObject.Destroy(gameObject);
-            TotalUserJoined--;
-            if (TotalUserJoined == 0)
-            {
-                StopSharing();
-            }
         }
     }
 
@@ -85,7 +86,6 @@ public class TestAppScreenShare : PlayerViewControllerBase
         Debug.Log("ScreenShare Deactivated");
         particleEffect.SetActive(false);
     }
-
 
     IEnumerator shareScreen()
     {
@@ -126,12 +126,18 @@ public class TestAppScreenShare : PlayerViewControllerBase
                 externalVideoFrame.timestamp = timestamp++;
                 //Push the external video frame with the frame we just created
                 mRtcEngine.PushVideoFrame(externalVideoFrame);
+                if (timestamp % 100 == 0)
+                {
+                    Debug.LogWarning("Pushed frame = " + timestamp);
+                }
+
             }
         }
     }
 
     void StopSharing()
     {
+        // set the boolean false will cause the shareScreen coRoutine to exit
         running = false;
     }
 }
