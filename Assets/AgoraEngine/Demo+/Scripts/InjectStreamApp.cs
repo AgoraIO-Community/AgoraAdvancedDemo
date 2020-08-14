@@ -7,18 +7,6 @@ public class InjectStreamApp : PlayerViewControllerBase
     bool _injecting = false;
     public string InjectURL { get; set; }
 
-    // Parameter used by makeImageSurface
-    protected override float WidthHeightRatio
-    {
-        get { return 1.5f; }
-    }
-
-    // Parameter used by makeImageSurface
-    protected override float RemoteVideoScale
-    {
-        get { return 2.5f; }
-    }
-
     protected override void PrepareToJoin()
     {
         base.PrepareToJoin();
@@ -40,8 +28,6 @@ public class InjectStreamApp : PlayerViewControllerBase
             ibtn.GetComponentInChildren<Text>().text = _injecting ? "Stop Injectin" : "Inject Stream";
         });
 
-        GameObject go = GameObject.Find("MyView");
-        go.AddComponent<VideoSurface>();
 
         TextAsset txt = (TextAsset)Resources.Load("injectURL", typeof(TextAsset));
         InjectURL = txt.text.Trim();
