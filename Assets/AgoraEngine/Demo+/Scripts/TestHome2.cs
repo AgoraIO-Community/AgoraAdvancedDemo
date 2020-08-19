@@ -12,7 +12,8 @@ public enum TestSceneEnum
     AppScreenShare,
     DesktopScreenShare,
     Transcoding,
-    InjectStream
+    InjectStream,
+    One2One
 };
 
 
@@ -146,6 +147,9 @@ public class TestHome2 : MonoBehaviour
                 break;
             case TestSceneEnum.InjectStream:
                 app = new InjectStreamApp();
+                break;
+            case TestSceneEnum.One2One:
+                app = new PlayerViewControllerBase();
                 break;
         }
 

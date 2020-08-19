@@ -19,7 +19,7 @@ public class PlayerViewControllerBase : IVideoChatClient
     //    Application.persistentDataPath + "/tesagora.log";
     //#endif
     protected bool remoteUserJoined = false;
-    protected bool _enforcing360p = false; // the local view of the remote user resolution
+    protected bool _enforcing360p = true; // the local view of the remote user resolution
 
     public PlayerViewControllerBase()
     {
@@ -135,24 +135,29 @@ public class PlayerViewControllerBase : IVideoChatClient
 
     protected virtual void OnVideoSizeChanged(uint uid, int width, int height, int rotation)
     {
-        Debug.LogWarningFormat("OnVideoSizeChanged width = {0} height = {1} for user:{2}", width, height, uid);
+        Debug.LogWarningFormat("OnVideoSizeChanged width = {0} height = {1} for rotation:{2}", width, height, rotation);
         if (UserVideoDict.ContainsKey(uid))
         {
             GameObject go = UserVideoDict[uid].gameObject;
+            Vector2 v2 = new Vector2(width, height);
             RawImage image = go.GetComponent<RawImage>();
             if (_enforcing360p)
             {
-                image.rectTransform.sizeDelta = AgoraUIUtils.GetScaledDimension(width, height, 360f);
+                v2 = AgoraUIUtils.GetScaledDimension(width, height, 360f);
             }
-            else
+
+            if (IsPortraitOrientation(rotation))
             {
-                image.rectTransform.sizeDelta = new Vector2(width, height);
+                v2 = new Vector2(v2.y, v2.x);
             }
-            Vector2 v2 = AgoraUIUtils.GetRandomPosition(100);
-            go.transform.localPosition = new Vector3(v2.x, v2.y, 0);
+            image.rectTransform.sizeDelta = v2;
         }
     }
 
+    bool IsPortraitOrientation(int rotation)
+    {
+        return rotation == 90 || rotation == 270;
+    }
 
     /// <summary>
     ///   Load the Agora RTC engine with given AppID
@@ -245,6 +250,8 @@ public class PlayerViewControllerBase : IVideoChatClient
             videoSurface.SetGameFps(30);
             videoSurface.EnableFilpTextureApply(enableFlipHorizontal: true, enableFlipVertical: false);
             UserVideoDict[uid] = videoSurface;
+            Vector2 pos = AgoraUIUtils.GetRandomPosition(100);
+            videoSurface.transform.localPosition = new Vector3(pos.x, pos.y, 0);
         }
     }
 
@@ -254,7 +261,13 @@ public class PlayerViewControllerBase : IVideoChatClient
     {
         // remove video stream
         Debug.Log("onUserOffline: uid = " + uid + " reason = " + reason);
-        UserVideoDict.Remove(uid);
+        if (UserVideoDict.ContainsKey(uid))
+        {
+            var surface = UserVideoDict[uid];
+            surface.SetEnable(false);
+            UserVideoDict.Remove(uid);
+            GameObject.Destroy(surface.gameObject);
+        }
     }
 
     protected VideoSurface makeImageSurface(string goName)
