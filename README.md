@@ -6,7 +6,7 @@ This project contains sample code to demonstrate advanced features provided by t
 
 ## Main scene view
 
-![Screen Shot 2020-07-07 at 2 28 35 PM](https://user-images.githubusercontent.com/1261195/88594543-3416f880-d016-11ea-9f75-5c7e712efa84.png)
+![Screen Shot 2020-07-07 at 2 28 35 PM](https://user-images.githubusercontent.com/1261195/90931055-b2b24c00-e3b0-11ea-9cd7-f159f51c96b0.png)
 
   
 ## Feature Note
