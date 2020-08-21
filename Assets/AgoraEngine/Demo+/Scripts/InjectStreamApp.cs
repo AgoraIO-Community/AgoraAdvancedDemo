@@ -31,8 +31,16 @@ public class InjectStreamApp : PlayerViewControllerBase
 
         TextAsset txt = (TextAsset)Resources.Load("injectURL", typeof(TextAsset));
         InjectURL = txt.text.Trim();
-
         Debug.Log("InjectURL = " + InjectURL);
+
+        txt = (TextAsset)Resources.Load("wiki_URL", typeof(TextAsset));
+        string wikiURL = txt.text.Trim();
+
+        ibtn = GameObject.Find("HelpButton").GetComponent<Button>();
+        ibtn.onClick.AddListener(() =>
+        {
+            Application.OpenURL(wikiURL);
+        });
     }
 
     protected override void OnUserOffline(uint uid, USER_OFFLINE_REASON reason)
