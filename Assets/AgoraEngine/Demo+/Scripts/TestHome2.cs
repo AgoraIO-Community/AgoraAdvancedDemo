@@ -75,6 +75,12 @@ public class TestHome2 : MonoBehaviour
     {
         Debug.Assert(AppID.Length > 10, "Please fill in your AppId first on Game Controller object.");
         if (AppID.Length > 10) { _initialized = true; }
+        GameObject go = GameObject.Find("AppIDText");
+        if (_initialized && go != null)
+        {
+            Text appIDText = go.GetComponent<Text>();
+            appIDText.text = "AppID:" + AppID.Substring(0, 4) + "********" + AppID.Substring(AppID.Length - 4, 4);
+        }
     }
 
     /// <summary>
