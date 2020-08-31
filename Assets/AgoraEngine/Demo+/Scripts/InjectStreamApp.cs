@@ -22,10 +22,8 @@ public class InjectStreamApp : PlayerViewControllerBase
         Button ibtn = GameObject.Find("InjectButton").GetComponent<Button>();
         ibtn.onClick.AddListener(() =>
         {
-            if (_injecting) { NoInjectRTMP(InjectURL); }
-            else { InjectRTMP(InjectURL); }
-            _injecting = !_injecting;
-            ibtn.GetComponentInChildren<Text>().text = _injecting ? "Stop Injectin" : "Inject Stream";
+            HandleInjectButton(ibtn);
+
         });
 
 
@@ -36,8 +34,8 @@ public class InjectStreamApp : PlayerViewControllerBase
         txt = (TextAsset)Resources.Load("wiki_URL", typeof(TextAsset));
         string wikiURL = txt.text.Trim();
 
-        ibtn = GameObject.Find("HelpButton").GetComponent<Button>();
-        ibtn.onClick.AddListener(() =>
+        Button ibtn2 = GameObject.Find("HelpButton").GetComponent<Button>();
+        ibtn2.onClick.AddListener(() =>
         {
             Application.OpenURL(wikiURL);
         });
@@ -53,7 +51,20 @@ public class InjectStreamApp : PlayerViewControllerBase
         }
     }
 
-    void InjectRTMP(string url)
+    void HandleInjectButton(Button ibtn)
+    {
+        if (_injecting)
+        {
+            StopStream(InjectURL);
+        }
+        else
+        {
+            InjectStream(InjectURL);
+        }
+        ibtn.GetComponentInChildren<Text>().text = _injecting ? "Stop Injectin" : "Inject Stream";
+    }
+
+    void InjectStream(string url)
     {
         InjectStreamConfig injectStreamConfig = new InjectStreamConfig();
         injectStreamConfig.width = 0;
@@ -69,13 +80,15 @@ public class InjectStreamApp : PlayerViewControllerBase
         int ret = mRtcEngine.AddInjectStreamUrl(url, injectStreamConfig);
 
         Debug.LogWarning("Injecting RTMP ret = :" + ret);
+        _injecting = true;
     }
 
-    void NoInjectRTMP(string url)
+    void StopStream(string url)
     {
         // Remove an online media stream.
         mRtcEngine.RemoveInjectStreamUrl(url);
         Debug.Log("Stopping RTMP URL:" + url);
+        _injecting = false;
     }
 
     void OnStreamInjectedStatus(string url, uint userId, int status)
