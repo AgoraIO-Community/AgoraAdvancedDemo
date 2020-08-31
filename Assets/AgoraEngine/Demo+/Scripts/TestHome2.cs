@@ -42,6 +42,8 @@ public class TestHome2 : MonoBehaviour
     private InputField channelInputField;
     [SerializeField]
     private RawImage previewImage;
+    [SerializeField]
+    private Toggle roleToggle;
 
     private bool _initialized = false;
 
@@ -155,7 +157,16 @@ public class TestHome2 : MonoBehaviour
                 app = new InjectStreamApp();
                 break;
             case TestSceneEnum.One2One:
-                app = new PlayerViewControllerBase();
+                if (roleToggle.isOn)
+                {
+                    // live streaming mode as audience
+                    app = new AudienceClientApp();
+                }
+                else
+                {
+                    // Communication mode
+                    app = new One2OneApp();
+                }
                 break;
         }
 

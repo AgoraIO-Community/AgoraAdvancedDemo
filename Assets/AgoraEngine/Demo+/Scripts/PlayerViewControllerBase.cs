@@ -19,7 +19,7 @@ public class PlayerViewControllerBase : IVideoChatClient
     //    Application.persistentDataPath + "/tesagora.log";
     //#endif
     protected bool remoteUserJoined = false;
-    protected bool _enforcing360p = true; // the local view of the remote user resolution
+    protected bool _enforcing360p = false; // the local view of the remote user resolution
 
     public PlayerViewControllerBase()
     {
