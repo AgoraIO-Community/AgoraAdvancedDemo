@@ -31,6 +31,7 @@ public class DesktopScreenShare : PlayerViewControllerBase
                     new Dropdown.OptionData(w.kCGWindowOwnerName + "|" + w.kCGWindowNumber)).ToList();
             }
             GameObject.Find("InputField").SetActive(false);
+            GameObject.Find("WinHelpButton").SetActive(false);
 #else
             dropdown.gameObject.SetActive(false);
             inputField = GameObject.Find("InputField").GetComponent<InputField>();
@@ -82,22 +83,19 @@ public class DesktopScreenShare : PlayerViewControllerBase
 #if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX
         mRtcEngine.StartScreenCaptureByDisplayId(getDisplayId(displayID0or1), default(Rectangle), sparams);  // 
 #else
-        TestRectCrop();
+        TestRectCrop(displayID0or1);
 #endif
         displayID0or1 = 1 - displayID0or1;
     }
 
-    void TestRectCrop()
+    void TestRectCrop(int order)
     {
-        Debug.LogWarning("TestRectCrop");
-        // Screen1 with region to crop
-        // Rectangle screenRect = new Rectangle() { x = 0, y = 0, width = 1920, height = 1080 * 2 };
-        // Rectangle regionRect = new Rectangle() { x = 0, y = 1080, width = 1920, height = 1080 };
+        // Assuming you have two display monitors, each of 1920x1080, position left to right:
+        Rectangle screenRect = new Rectangle() { x = 0, y = 0, width = 1920 * 2, height = 1080 };
+        Rectangle regionRect = new Rectangle() { x = order * 1920, y = 0, width = 1920, height = 1080 };
 
-        int rc = mRtcEngine.StartScreenCaptureByScreenRect(default(Rectangle),
-            default(Rectangle),
-            //regionRect, // 400x400
-            //  new ScreenCaptureParameters() { dimensions = new VideoDimensions { width = 400, height = 400 } }
+        int rc = mRtcEngine.StartScreenCaptureByScreenRect(screenRect,
+            regionRect,
             default(ScreenCaptureParameters)
             );
         if (rc != 0) Debug.LogWarning("rc = " + rc);
