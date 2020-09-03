@@ -36,7 +36,10 @@ public class TestAppScreenShare : PlayerViewControllerBase
         {
             bitrate = 1130,
             frameRate = FRAME_RATE.FRAME_RATE_FPS_15,
-            dimensions = new VideoDimensions() { width = Screen.width, height = Screen.height }
+            dimensions = new VideoDimensions() { width = Screen.width, height = Screen.height },
+
+            // Note if your remote user video surface to set to flip Horizontal, then we should flip it before sending
+            mirrorMode = VIDEO_MIRROR_MODE_TYPE.VIDEO_MIRROR_MODE_ENABLED
         });
 
         Debug.LogFormat("Sharing Screen with width = {0} height = {1}", Screen.width, Screen.height);
